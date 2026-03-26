@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 
 	"lost/internal/db"
@@ -306,8 +307,25 @@ func detectShell() string {
 }
 
 func executeCommand(command string, directory string) error {
-	// Use os/exec to run the command
-	cmd := exec.Command("cmd", "/C", command)
+	var cmd *exec.Cmd
+
+	switch runtime.GOOS {
+	case "windows":
+		if _, err := exec.LookPath("powershell"); err == nil {
+			cmd = exec.Command("powershell", "-NoProfile", "-Command", command)
+		} else {
+			cmd = exec.Command("cmd", "/C", command)
+		}
+	default:
+		shell := getenv("SHELL")
+		if shell != "" {
+			cmd = exec.Command(shell, "-lc", command)
+		} else if _, err := exec.LookPath("bash"); err == nil {
+			cmd = exec.Command("bash", "-lc", command)
+		} else {
+			cmd = exec.Command("sh", "-c", command)
+		}
+	}
 
 	if directory != "" {
 		cmd.Dir = directory

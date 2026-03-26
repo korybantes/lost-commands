@@ -28,6 +28,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&dbPath, "db", defaultDbPath, "Path to the database file")
 	
 	rootCmd.Version = "1.0.0\nCreated by @korybantes (Ertac Toptutan)"
+	rootCmd.SilenceUsage = true
+	rootCmd.SilenceErrors = true
 }
 
 func getBanner() string {
