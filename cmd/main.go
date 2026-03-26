@@ -11,6 +11,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
+const appVersion = "1.0.0"
 
 var (
 	dbPath string
@@ -27,7 +28,7 @@ func init() {
 	
 	rootCmd.PersistentFlags().StringVar(&dbPath, "db", defaultDbPath, "Path to the database file")
 	
-	rootCmd.Version = "1.0.0\nCreated by @korybantes (Ertac Toptutan)"
+	rootCmd.Version = fmt.Sprintf("%s\nCreated by @korybantes (Ertac Toptutan)", appVersion)
 	rootCmd.SilenceUsage = true
 	rootCmd.SilenceErrors = true
 }
@@ -63,6 +64,7 @@ func getBanner() string {
 	b.WriteString(cyan("  lost search <query>           ") + "Search commands\n")
 	b.WriteString(cyan("  lost search -t <tag> -r       ") + "Search by tag & run\n")
 	b.WriteString(cyan("  lost run <tag>                ") + "Run command by tag\n")
+	b.WriteString(cyan("  lost update                   ") + "Update to latest release\n")
 	b.WriteString(cyan("  lost recent                   ") + "Show recent commands\n")
 	b.WriteString(cyan("  lost tags                     ") + "List all tags\n")
 	b.WriteString(yellow("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"))
