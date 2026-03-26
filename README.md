@@ -8,13 +8,15 @@ Lost is a cross-platform tool that captures, tags, and searches your terminal co
 - **Intelligent Auto-Tagging**: Commands are automatically tagged based on patterns (git, docker, npm, python, etc.)
 - **Full-Text Search**: Search through your entire command history
 - **Tag-Based Filtering**: Find commands by tags
+- **Run by Tag**: Execute the most recent command for a tag with `lost run <tag>`
+- **Quick Run Shortcut**: Search and execute in one step with `lost search -t <tag> -r`
 - **Cross-Platform**: Works on Windows (PowerShell), macOS, and Linux (Bash/Zsh)
 
 ## Installation
 
 ### Pre-built Binaries (Recommended)
 
-Download the latest binary for your platform from [GitHub Releases](https://github.com/YOUR_USERNAME/lost/releases):
+Download the latest binary for your platform from [GitHub Releases](https://github.com/korybantes/lost-commands/releases):
 
 **Windows (PowerShell):**
 ```powershell
@@ -47,6 +49,24 @@ lost install bash
 lost install zsh
 ```
 
+### Build from Source (Linux)
+
+```bash
+# 1) Clone
+git clone https://github.com/korybantes/lost-commands.git
+cd lost-commands
+
+# 2) Build Linux binary
+chmod +x scripts/build-linux.sh
+./scripts/build-linux.sh
+
+# 3) Run directly
+./lost-linux-amd64 --help
+
+# Optional: install globally to /usr/local/bin/lost
+./scripts/build-linux.sh --install
+```
+
 ## Usage
 
 ```bash
@@ -55,6 +75,9 @@ lost search git
 
 # Search with tag filter
 lost search --tag docker
+
+# Search and immediately run the most recent match
+lost search --tag docker -r
 
 # Show recent commands
 lost recent
@@ -68,6 +91,9 @@ lost add "docker-compose up -d" --tag deploy
 
 # Tag an existing command
 lost tag 123 production
+
+# Run most recent command by tag
+lost run deploy
 ```
 
 ## Auto-Tagging Rules
@@ -101,6 +127,7 @@ Commands are stored in a local SQLite database:
 | `lost add <cmd>` | Manually add a command |
 | `lost capture <cmd> [dir]` | Internal: called by shell hooks |
 | `lost search [query]` | Search commands |
+| `lost run <tag>` | Run most recent command by tag |
 | `lost recent [n]` | Show recent commands |
 | `lost tag <id> <tag>` | Add tag to command |
 | `lost tags` | List all tags |
