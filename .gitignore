@@ -1,0 +1,12 @@
+# Binaries
+lost.exe
+lost
+lost-*
+
+# Database and logs
+*.db
+*.log
+
+# Build directories
+dist/
+build/
